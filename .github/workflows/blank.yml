@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendSolve — Every Problem Has a Smarter Solution</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            900: '#0B0F19',
+                            800: '#111827',
+                            700: '#1F2937',
+                            600: '#374151',
+                        },
+                        electric: {
+                            500: '#3B82F6',
+                            600: '#2563EB',
+                        },
+                        purple: {
+                            500: '#8B5CF6',
+                            600: '#7C3AED',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .light .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 50%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(11, 15, 25, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(55, 65, 81, 0.8);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(96, 165, 250, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-navy-900 text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Top Navigation -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" onclick="showSection('home')" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-electric-500 to-purple-500 flex items-center justify-center shadow-lg shadow-electric-500/20 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-bolt text-white text-lg"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-extrabold tracking-tight gradient-text">TrendSolve</span>
+                    <span class="text-[10px] text-gray-400 font-medium tracking-wider uppercase -mt-1">Verified Solutions</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                <button onclick="showSection('home')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-navy-800 transition-colors active-tab" data-target="home">Home</button>
+                <button onclick="showSection('directory')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-navy-800 transition-colors" data-target="directory">All Problems</button>
+                <button onclick="showSection('tools')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-navy-800 transition-colors" data-target="tools">AI Tools & Resources</button>
+                <button onclick="showSection('guides')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-navy-800 transition-colors" data-target="guides">Beginner Guides</button>
+                <button onclick="showSection('about')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-navy-800 transition-colors" data-target="about">About</button>
+            </nav>
+
+            <!-- Right Actions -->
+            <div class="flex items-center space-x-3">
+                <!-- Favourites Drawer Trigger -->
+                <button onclick="toggleFavouritesDrawer()" class="relative p-2.5 rounded-xl bg-navy-800/80 hover:bg-navy-700 text-gray-300 hover:text-white transition-all border border-gray-700/50" title="Saved Solutions">
+                    <i class="fa-solid fa-bookmark"></i>
+                    <span id="fav-counter" class="absolute -top-1 -right-1 w-5 h-5 bg-electric-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center shadow">0</span>
+                </button>
+
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-navy-800/80 hover:bg-navy-700 text-gray-300 hover:text-white transition-all border border-gray-700/50" title="Toggle Dark/Light Mode">
+                    <i id="theme-icon" class="fa-solid fa-sun"></i>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-navy-800/80 hover:bg-navy-700 text-gray-300 hover:text-white transition-all border border-gray-700/50">
+                    <i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-b border-gray-800 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="showSection('home'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-gray-300 hover:bg-navy-800">Home</button>
+            <button onclick="showSection('directory'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-gray-300 hover:bg-navy-800">All Problems</button>
+            <button onclick="showSection('tools'); toggleMobileMenu();
