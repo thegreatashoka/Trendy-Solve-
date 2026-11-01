@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendSolve — Every Problem Has a Smarter Solution</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            900: '#0a0f1d',
+                            800: '#111827',
+                            700: '#1f2937',
+                            600: '#374151'
+                        },
+                        electric: {
+                            blue: '#3b82f6',
+                            purple: '#8b5cf6',
+                            accent: '#6366f1'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glass-card {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .light .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 20%, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.1), transparent 70%);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.3);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-navy-900 text-gray-100 min-h-screen flex flex-col selection:bg-blue-500 selection:text-white transition-colors duration-300">
+
+    <!-- Top Announcement Banner -->
+    <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium flex items-center justify-center gap-2">
+        <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider">New</span>
+        <span>Explore 15+ verified guides for AI workflow automation & remote freelancing!</span>
+        <button onclick="this.parentElement.style.display='none'" class="ml-4 hover:opacity-75"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-card border-b border-gray-800/50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-bolt-lightning text-lg"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">TrendSolve</span>
+                    <span class="text-[10px] text-gray-400 tracking-wider uppercase font-semibold">Verified Problem Solver</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300">
+                <a href="#problems" class="hover:text-blue-400 transition-colors">Problems</a>
+                <a href="#categories" class="hover:text-blue-400 transition-colors">Categories</a>
+                <a href="#tools" class="hover:text-blue-400 transition-colors">Free AI Tools</a>
+                <a href="#guides" class="hover:text-blue-400 transition-colors">Guides</a>
+                <a href="#about" class="hover:text-blue-400 transition-colors">About</a>
+            </nav>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-3">
+                <!-- Saved Favourites Trigger -->
+                <button onclick="toggleBookmarksModal()" class="relative p-2 rounded-xl bg-gray-800/60 hover:bg-gray-800 text-gray-300 hover:text-white transition-colors border border-gray-700/50" title="Saved Solutions">
+                    <i class="fa-solid fa-bookmark text-sm"></i>
+                    <span id="bookmark-badge" class="absolute -top-1 -right-1 w-5 h-5 bg-blue-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center shadow">0</span>
+                </button>
+
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="p-2 rounded-xl bg-gray-800/60 hover:bg-gray-800 text-gray-300 hover:text-white transition-colors border border-gray-700/50" title="Toggle Theme">
+                    <i id="theme-icon" class="fa-solid fa-sun text-sm"></i>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-xl bg-gray-800/60 text-gray-300 hover:text-white border border-gray-700/50">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 border-t border-gray-800 bg-navy-800/95">
+            <a href="#problems" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-gray-700/50 text-sm font-medium text-gray-300">Problems</a>
+            <a href="#categories" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-gray-700/50 text-sm font-medium text-gray-300">Categories</a>
+            <a href="#tools" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-gray-700/50 text-sm font-medium text-gray-300">Free AI Tools</a>
+            <a href="#guides" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-gray-700/50 text-sm font-medium text-gray-300">Guides</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-gray-700/50 text-sm font-medium text-gray-300">About & Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-16 pb-20 px-4 sm:px-6 lg:px-8 hero-gradient overflow-hidden">
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold mb-6 uppercase tracking-wider">
+                <i class="fa-solid fa-shield-halved"></i> 100% Verified Practical Solutions
+            </div>
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+                Every Problem Has a <span class="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">Smarter Solution.</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-gray-300 mb-10 max-w-2xl mx-auto font-normal">
+                Discover trending problems, explore practical step-by-step solutions, and make your daily life and work significantly easier.
+            </p>
+
+            <!-- Search Bar Box -->
+            <div class="glass-card p-3 rounded-2xl shadow-2xl max-w-2xl mx-auto border border-gray-700/60 relative">
+                <div class="flex flex-col sm:flex-row items-center gap-2">
+                    <div class="relative flex-1 w-full">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg"></i>
+                        <input type="text" id="main-search-input" oninput="handleSearch()" placeholder="What problem are you trying to solve? (e.g. laptop battery, burnout, AI content)" class="w-full bg-transparent pl-12 pr-4 py-3.5 text-gray-100 placeholder-gray-400 text-sm sm:text-base focus:outline-none">
+                    </div>
+                    <button onclick="triggerSearchAction()" class="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/30 transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2">
+                        <span>Search</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Trending Searches Pills -->
+            <div class="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm text-gray-400">
+                <span class="font-semibold text-gray-300"><i class="fa-solid fa-fire text-amber-500 mr-1"></i> Trending:</span>
+                <button onclick="quickSearch('AI Tools')" class="px-3 py-1 rounded-full bg-gray-800/80 hover:bg-gray-700 border border-gray-700 text-gray-300 transition-colors">AI Productivity</button>
+                <button onclick="quickSearch('Battery')" class="px-3 py-1 rounded-full bg-gray-800/80 hover:bg-gray-700 border border-gray-700 text-gray-300 transition-colors">Laptop Battery</button>
+                <button onclick="quickSearch('Freelance')" class="px-3 py-1 rounded-full bg-gray-800/80 hover:bg-gray-700 border border-gray-700 text-gray-300 transition-colors">First Freelance Client</button>
+                <button onclick="quickSearch('Burnout')" class="px-3 py-1 rounded-full bg-gray-800/80 hover:bg-gray-700 border border-gray-700 text-gray-300 transition-colors">Creator Burnout</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Horizontal Scroll -->
+    <section id="categories" class="py-6 border-y border-gray-800/60 bg-navy-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none" id="category-pills-container">
+                <button onclick="filterByCategory('All')" class="category-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all bg-blue-600 text-white shadow-md shadow-blue-600/30">
+                    <i class="fa-solid fa-globe mr-1.5"></i> All Categories
+                </button>
+                <!-- Generated dynamically via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+            <div>
+                <h2 id="section-title" class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Trending Problems & Solutions</h2>
+                <p id="section-subtitle" class="text-sm text-gray-400 mt-1">Explore curated, actionable fixes for real-world challenges.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <select id="sort-select" onchange="sortProblems()" class="bg-gray-800 border border-gray-700 text-gray-300 text-xs sm:text-sm rounded-xl px-3 py-2 focus:outline-none focus:border-blue-500">
+                    <option value="popular">Most Popular</option>
+                    <option value="recent">Recently Added</option>
+                    <option value="fastest">Fastest Solution Time</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Problems Grid -->
+        <div id="problems-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards populated by JS -->
+        </div>
+
+        <!-- Empty State (Hidden by default) -->
+        <div id="empty-state" class="hidden text-center py-20">
+            <div class="w-16 h-16 bg-gray-800 text-gray-400 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl border border-gray-700">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-1">No matching problems found</h3>
+            <p class="text-sm text-gray-400 mb-6">Try searching with broader keywords or browse all categories.</p>
+            <button onclick="resetSearchFilter()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-xl shadow transition-all">
+                Reset Search & Filters
+            </button>
+        </div>
+
+        <!-- Free Tools & AI Directory Section -->
+        <section id="tools" class="mt-20">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Curated Free Tools & AI Directory</h2>
+                    <p class="text-sm text-gray-400 mt-1">Handpicked freemium & open-source tools to accelerate your workflow.</p>
+                </div>
+                <span class="text-xs text-blue-400 font-semibold uppercase tracking-wider bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">Verified Resources</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Tool Card 1 -->
+                <div class="glass-card p-5 rounded-2xl border border-gray-800 hover:border-blue-500/50 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 rounded-lg bg-purple-500/10 text-purple-400 text-xs font-semibold">AI & Automation</span>
+                            <span class="text-xs text-emerald-400 font-medium"><i class="fa-solid fa-check-circle mr-1"></i>Free tier</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-1">Claude 3.5 Sonnet</h3>
+                        <p class="text-xs text-gray-400 mb-4">Advanced reasoning AI model ideal for coding, complex document analysis, and content structuring.</p>
+                    </div>
+                    <a href="https://claude.ai" target="_blank" class="w-full py-2 bg-gray-800 hover:bg-blue-600 text-gray-200 hover:text-white text-xs font-semibold rounded-xl text-center transition-colors flex items-center justify-center gap-1.5">
+                        <span>Visit Tool</span>
+                        <i class="fa-solid fa-external-link-alt text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Tool Card 2 -->
+                <div class="glass-card p-5 rounded-2xl border border-gray-800 hover:border-blue-500/50 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 rounded-lg bg-blue-500/10 text-blue-400 text-xs font-semibold">Productivity</span>
+                            <span class="text-xs text-emerald-400 font-medium"><i class="fa-solid fa-check-circle mr-1"></i>Free tier</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-1">Notion Workspace</h3>
+                        <p class="text-xs text-gray-400 mb-4">All-in-one workspace for notes, task management, project tracking, and personal knowledge bases.</p>
+                    </div>
+                    <a href="https://notion.so" target="_blank" class="w-full py-2 bg-gray-800 hover:bg-blue-600 text-gray-200 hover:text-white text-xs font-semibold rounded-xl text-center transition-colors flex items-center justify-center gap-1.5">
+                        <span>Visit Tool</span>
+                        <i class="fa-solid fa-external-link-alt text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Tool Card 3 -->
+                <div class="glass-card p-5 rounded-2xl border border-gray-800 hover:border-blue-500/50 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-semibold">Design & Media</span>
+                            <span class="text-xs text-emerald-400 font-medium"><i class="fa-solid fa-check-circle mr-1"></i>Free</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-1">CapCut Web Editor</h3>
+                        <p class="text-xs text-gray-400 mb-4">Browser-based video editor with automated captions, smart resizing, and viral short-form templates.</p>
+                    </div>
+                    <a href="https://capcut.com" target="_blank" class="w-full py-2 bg-gray-800 hover:bg-blue-600 text-gray-200 hover:text-white text-xs font-semibold rounded-xl text-center transition-colors flex items-center justify-center gap-1.5">
+                        <span>Visit Tool</span>
+                        <i class="fa-solid fa-external-link-alt text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Tool Card 4 -->
+                <div class="glass-card p-5 rounded-2xl border border-gray-800 hover:border-blue-500/50 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-400 text-xs font-semibold">SEO & Growth</span>
+                            <span class="text-xs text-emerald-400 font-medium"><i class="fa-solid fa-check-circle mr-1"></i>Freemium</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-1">AnswerThePublic</h3>
+                        <p class="text-xs text-gray-400 mb-4">Discover exact questions and search queries people ask around any niche or keyword.</p>
+                    </div>
+                    <a href="https://answerthepublic.com" target="_blank" class="w-full py-2 bg-gray-800 hover:bg-blue-600 text-gray-200 hover:text-white text-xs font-semibold rounded-xl text-center transition-colors flex items-center justify-center gap-1.5">
+                        <span>Visit Tool</span>
+                        <i class="fa-solid fa-external-link-alt text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Beginner Guides Section -->
+        <section id="guides" class="mt-20">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Beginner Problem-Solving Masterclasses</h2>
+                    <p class="text-sm text-gray-400 mt-1">Structured learning roadmaps to tackle complex modern challenges.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Guide 1 -->
+                <div class="glass-card p-6 rounded-2xl border border-gray-800">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/10
