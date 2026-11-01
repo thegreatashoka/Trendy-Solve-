@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendSolve - Every Problem Has a Smarter Solution</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            950: '#060913',
+                            900: '#0B0F19',
+                            800: '#111827',
+                            700: '#1F2937',
+                            600: '#374151'
+                        },
+                        brand: {
+                            blue: '#3B82F6',
+                            purple: '#8B5CF6',
+                            cyan: '#06B6D4'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .light .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .light .glass-card {
+            background: #ffffff;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 12px 24px -10px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(11, 15, 25, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(139, 92, 246, 0.3);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 92, 246, 0.6);
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 50%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-btn {
+            background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+            transition: all 0.3s ease;
+        }
+        .gradient-btn:hover {
+            opacity: 0.95;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Hide scrollbar for category pills */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Toast Animation */
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .animate-slide-up {
+            animation: slideUp 0.3s forwards ease-out;
+        }
+    </style>
+</head>
+<body class="bg-navy-950 text-slate-100 min-h-screen flex flex-col transition-colors duration-300 light:bg-slate-50 light:text-slate-800">
+
+    <!-- TOP ANNOUNCEMENT BANNER -->
+    <div class="bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-pink-600/20 border-b border-white/10 text-xs py-2 text-center text-slate-300 font-medium">
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-brand-purple/20 text-purple-300 font-semibold mr-2 border border-purple-500/30">
+            <i class="fa-solid fa-sparkles text-xs"></i> New v2.4
+        </span>
+        Over 15+ newly added real-world problem breakdowns & verified AI workflows!
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-800/80 light:border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3">
+                <a href="#" onclick="resetView()" class="flex items-center gap-2.5 group">
+                    <div class="w-10 h-10 rounded-xl gradient-btn flex items-center justify-center text-white shadow-lg shadow-purple-500/20 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-lightbulb text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold tracking-tight text-white light:text-slate-900">Trend<span class="text-gradient">Solve</span></span>
+                        <span class="ml-1.5 text-[10px] font-bold uppercase tracking-wider text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20">Beta</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+                <button onclick="filterCategory('All')" class="px-3 py-1.5 text-sm font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 light:text-slate-600 light:hover:text-slate-900 light:hover:bg-slate-100 transition">Explore</button>
+                <button onclick="scrollToSection('ai-tools-section')" class="px-3 py-1.5 text-sm font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 light:text-slate-600 light:hover:text-slate-900 light:hover:bg-slate-100 transition">AI Tools</button>
+                <button onclick="scrollToSection('guides-section')" class="px-3 py-1.5 text-sm font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 light:text-slate-600 light:hover:text-slate-900 light:hover:bg-slate-100 transition">Guides</button>
+                <button onclick="openModal('aboutModal')" class="px-3 py-1.5 text-sm font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 light:text-slate-600 light:hover:text-slate-900 light:hover:bg-slate-100 transition">About</button>
+                <button onclick="openModal('contactModal')" class="px-3 py-1.5 text-sm font-medium rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 light:text-slate-600 light:hover:text-slate-900 light:hover:bg-slate-100 transition">Contact</button>
+            </nav>
+
+            <!-- Actions Right -->
+            <div class="flex items-center gap-3">
+                <!-- Theme Toggle Button -->
+                <button id="themeToggle" onclick="toggleTheme()" class="p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/80 light:hover:bg-slate-200 transition border border-transparent hover:border-slate-700" title="Toggle Light/Dark Theme">
+                    <i class="fa-solid fa-moon text-lg" id="themeIcon"></i>
+                </button>
+
+                <!-- Bookmarked Saved Drawer Button -->
+                <button onclick="toggleSavedDrawer()" class="relative flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800/80 border border-slate-700/60 hover:border-purple-500/50 hover:bg-slate-800 text-sm font-semibold transition light:bg-slate-100 light:border-slate-300 light:text-slate-800">
+                    <i class="fa-solid fa-bookmark text-purple-400"></i>
+                    <span class="hidden sm:inline">Saved</span>
+                    <span id="savedCounter" class="bg-brand-purple text-white text-[11px] font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative py-16 md:py-24 px-4 overflow-hidden border-b border-slate-800/60 light:border-slate-200">
+        <!-- Ambient Glowing Orbs -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-gradient-to-tr from-brand-blue/20 to-brand-purple/20 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold mb-6">
+                <i class="fa-solid fa-fire text-amber-400"></i> Solved by 50,000+ Problem Solvers This Month
+            </div>
+            
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-white light:text-slate-900 mb-6">
+                Every Problem Has a <br class="hidden sm:block">
+                <span class="text-gradient">Smarter Solution.</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-slate-400 light:text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+                Discover curated real-world challenges, actionable step-by-step resolution blueprints, and modern free AI tools tailored for daily efficiency.
+            </p>
+
+            <!-- Search Container -->
+            <div class="max-w-2xl mx-auto relative group mb-8">
+                <div class="absolute -inset-1 bg-gradient-to-r from-brand-blue to-brand-purple rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+                <div class="relative flex items-center bg-navy-900 light:bg-white rounded-2xl border border-slate-700/80 light:border-slate-300 p-2 shadow-2xl">
+                    <i class="fa-solid fa-magnifying-glass text-slate-400 ml-4 text-lg"></i>
+                    <input type="text" id="searchInput" placeholder="What problem are you trying to solve today?" 
+                        class="w-full bg-transparent px-4 py-3 text-slate-100 light:text-slate-900 placeholder-slate-400 focus:outline-none text-base"
+                        onkeyup="handleSearch(event)">
+                    <button id="clearSearchBtn" onclick="clearSearch()" class="hidden text-slate-500 hover:text-slate-300 px-2">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <button onclick="triggerSearch()" class="gradient-btn text-white px-6 py-3 rounded-xl font-bold text-sm tracking-wide ml-2 flex items-center gap-2">
+                        <span>Search</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Trending Tags -->
+            <div class="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400">
+                <span class="font-semibold text-slate-500 uppercase tracking-wider text-[11px] mr-1">Trending Tags:</span>
+                <button onclick="setSearchQuery('ChatGPT')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700/60 light:bg-slate-200 light:text-slate-700 light:hover:bg-slate-300 transition">#ChatGPT</button>
+                <button onclick="setSearchQuery('SEO')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700/60 light:bg-slate-200 light:text-slate-700 light:hover:bg-slate-300 transition">#SEO-2026</button>
+                <button onclick="setSearchQuery('Freelance')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700/60 light:bg-slate-200 light:text-slate-700 light:hover:bg-slate-300 transition">#Freelance</button>
+                <button onclick="setSearchQuery('Study')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700/60 light:bg-slate-200 light:text-slate-700 light:hover:bg-slate-300 transition">#StudySystem</button>
+                <button onclick="setSearchQuery('Remote Work')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700/60 light:bg-slate-200 light:text-slate-700 light:hover:bg-slate-300 transition">#Productivity</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+
+        <!-- CATEGORIES FILTER BAR -->
+        <section class="mb-10">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 light:text-slate-500">Explore by Category</h2>
+                <span id="resultsCount" class="text-xs text-purple-400 font-semibold bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/20">15 Problems Available</span>
+            </div>
+            
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 -mx-2 px-2" id="categoryContainer">
+                <!-- Dynamically Generated Category Pills -->
+            </div>
+        </section>
+
+        <!-- PROBLEMS GRID SECTION -->
+        <section id="problemsSection" class="mb-16">
+            <div id="problemsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamic Problem Cards Inserted Here -->
+            </div>
+
+            <!-- EMPTY SEARCH STATE -->
+            <div id="emptyState" class="hidden text-center py-16 px-4 glass-card rounded-2xl border border-slate-800">
+                <div class="w-16 h-16 bg-slate-800/80 rounded-full flex items-center justify-center mx-auto mb-4 text-purple-400 text-2xl">
+                    <i class="fa-solid fa-magnifying-glass-slash"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white light:text-slate-900 mb-2">No problems matching your search</h3>
+                <p class="text-slate-400 light:text-slate-600 max-w-md mx-auto mb-6 text-sm">We couldn't find anything matching your exact query. Try searching broader keywords or pick a suggested category below.</p>
+                <div class="flex flex-wrap justify-center gap-2">
+                    <button onclick="filterCategory('All')" class="px-4 py-2 rounded-xl gradient-btn text-white font-semibold text-xs">Reset All Filters</button>
+                    <button onclick="setSearchQuery('AI Tools')" class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 font-semibold text-xs hover:text-white">Try "AI Tools"</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SPONSORED / MONETIZATION PLACEHOLDER -->
+        <section class="mb-16">
+            <div class="p-6 rounded-2xl glass-panel border border-brand-purple/20 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-purple-600/10 blur-3xl rounded-full"></div>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400 text-xl font-bold flex-shrink-0">
+                        <i class="fa-solid fa-rectangle-ad"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">Sponsored Resource</span>
+                            <span class="text-xs text-slate-400">Partner Recommendation</span>
+                        </div>
+                        <h4 class="text-base font-bold text-white light:text-slate-900">Accelerate your workflow with Notion AI Workspace</h4>
+                        <p class="text-xs text-slate-400 light:text-slate-600">All-in-one productivity suite to organize solutions, notes, and AI drafting.</p>
+                    </div>
+                </div>
+                <a href="https://notion.so" target="_blank" rel="noopener noreferrer" class="gradient-btn px-5 py-2.5 rounded-xl text-xs font-bold text-white whitespace-nowrap shadow-md">
+                    Explore Partner Tool <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[10px]"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- FREE AI TOOLS DIRECTORY SECTION -->
+        <section id="ai-tools-section" class="mb-16">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-white light:text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles text-brand-purple"></i> Essential Free AI Tools Directory
+                    </h2>
+                    <p class="text-sm text-slate-400 light:text-slate-600 mt-1">Tested & verified non-paid AI utilities to automate your daily tasks.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- AI Tool Card 1 -->
+                <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-brain"></i>
+                            </span>
+                            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">100% Free</span>
+                        </div>
+                        <h3 class="font-bold text-white light:text-slate-900 mb-1">ChatGPT 4o mini</h3>
+                        <p class="text-xs text-slate-400 light:text-slate-600 mb-4">Fast conversational intelligence for code debug, copy generation, and summaries.</p>
+                    </div>
+                    <a href="https://chatgpt.com" target="_blank" class="w-full py-2 bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 rounded-xl text-xs font-semibold text-center block transition">Visit Tool</a>
+                </div>
+
+                <!-- AI Tool Card 2 -->
+                <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-pen-nib"></i>
+                            </span>
+                            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">Free Tier</span>
+                        </div>
+                        <h3 class="font-bold text-white light:text-slate-900 mb-1">Claude 3.5 Sonnet</h3>
+                        <p class="text-xs text-slate-400 light:text-slate-600 mb-4">Exceptional nuanced writing, complex reasoning, and structured code drafting.</p>
+                    </div>
+                    <a href="https://claude.ai" target="_blank" class="w-full py-2 bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 rounded-xl text-xs font-semibold text-center block transition">Visit Tool</a>
+                </div>
+
+                <!-- AI Tool Card 3 -->
+                <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="w-10 h-10 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-image"></i>
+                            </span>
+                            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">Free Daily Credits</span>
+                        </div>
+                        <h3 class="font-bold text-white light:text-slate-900 mb-1">Leonardo AI</h3>
+                        <p class="text-xs text-slate-400 light:text-slate-600 mb-4">High quality visual asset generation for blogs, marketing graphics, and prototypes.</p>
+                    </div>
+                    <a href="https://leonardo.ai" target="_blank" class="w-full py-2 bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 rounded-xl text-xs font-semibold text-center block transition">Visit Tool</a>
+                </div>
+
+                <!-- AI Tool Card 4 -->
+                <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-microphone"></i>
+                            </span>
+                            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">Open Source</span>
+                        </div>
+                        <h3 class="font-bold text-white light:text-slate-900 mb-1">OpenAI Whisper</h3>
+                        <p class="text-xs text-slate-400 light:text-slate-600 mb-4">Speech-to-text transcription engine for converting video and voice notes into text.</p>
+                    </div>
+                    <a href="https://github.com/openai/whisper" target="_blank" class="w-full py-2 bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 rounded-xl text-xs font-semibold text-center block transition">Visit Tool</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- BEGINNER GUIDES SECTION -->
+        <section id="guides-section" class="mb-16">
+            <h2 class="text-2xl font-extrabold text-white light:text-slate-900 mb-6 flex items-center gap-2">
+                <i class="fa-solid fa-graduation-cap text-brand-blue"></i> Featured Beginner Guides
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card p-6 rounded-2xl border border-slate-800">
+                    <span class="text-xs font-semibold text-brand-blue uppercase tracking-wider">Playbook 01</span>
+                    <h3 class="text-lg font-bold text-white light:text-slate-900 mt-1 mb-2">The Zero-Cost Digital Freelancer Blueprint</h3>
+                    <p class="text-xs text-slate-400 light:text-slate-600 mb-4">Step-by-step masterclass on acquiring international clients, structuring proposals, and handling payments without expensive platforms.</p>
+                    <button onclick="setSearchQuery('Freelance')" class="text-xs font-bold text-purple-400 hover:text-purple-300 flex items-center gap-1">
+                        Read Related Solutions <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="glass-card p-6 rounded-2xl border border-slate-800">
+                    <span class="text-xs font-semibold text-brand-purple uppercase tracking-wider">Playbook 02</span>
+                    <h3 class="text-lg font-bold text-white light:text-slate-900 mt-1 mb-2">Prompt Engineering Essentials for 2026</h3>
+                    <p class="text-xs text-slate-400 light:text-slate-600 mb-4">Learn how to frame context, role-play constraints, and chain prompts to get elite output from LLMs every single time.</p>
+                    <button onclick="setSearchQuery('Prompt')" class="text-xs font-bold text-purple-400 hover:text-purple-300 flex items-center gap-1">
+                        Read Related Solutions <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- DETAILED SOLUTION MODAL VIEW -->
+    <div id="solutionModal" class="fixed inset-0 z-50 hidden bg-navy-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+        <div class="bg-navy-900 light:bg-white border border-slate-800 light:border-slate-200 w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
+            
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-slate-800 light:border-slate-200 flex items-start justify-between gap-4 sticky top-0 bg-navy-900/90 light:bg-white/90 backdrop-blur z-10">
+                <div>
+                    <div class="flex items-center gap-2 mb-2 flex-wrap" id="modalBadges">
+                        <!-- Dynamic Badges -->
+                    </div>
+                    <h2 id="modalTitle" class="text-xl sm:text-2xl font-extrabold text-white light:text-slate-900">
+                        <!-- Dynamic Title -->
+                    </h2>
+                </div>
+                <button onclick="closeModal('solutionModal')" class="w-9 h-9 rounded-full bg-slate-800 light:bg-slate-100 text-slate-400 hover:text-white light:hover:text-slate-900 flex items-center justify-center transition flex-shrink-0">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content Body -->
+            <div class="p-6 sm:p-8 overflow-y-auto space-y-8 text-slate-300 light:text-slate-700 text-sm leading-relaxed" id="modalBody">
+                
+                <!-- Section 1: Overview & Why It Happens -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-800/40 light:bg-slate-50 p-5 rounded-2xl border border-slate-800 light:border-slate-200">
+                        <h4 class="font-bold text-white light:text-slate-900 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-brand-blue"></i> Overview & Context
+                        </h4>
+                        <p id="modalExplanation" class="text-xs leading-relaxed text-slate-300 light:text-slate-600"></p>
+                    </div>
+                    <div class="bg-slate-800/40 light:bg-slate-50 p-5 rounded-2xl border border-slate-800 light:border-slate-200">
+                        <h4 class="font-bold text-white light:text-slate-900 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Why This Happens
+                        </h4>
+                        <p id="modalWhy" class="text-xs leading-relaxed text-slate-300 light:text-slate-600"></p>
+                    </div>
+                </div>
+
+                <!-- Section 2: Step-by-Step Interactive Checklist -->
+                <div>
+                    <h3 class="text-lg font-bold text-white light:text-slate-900 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-brand-purple"></i> Step-by-Step Action Plan
+                    </h3>
+                    <div id="modalSteps" class="space-y-3">
+                        <!-- Dynamic Steps -->
+                    </div>
+                </div>
+
+                <!-- Section 3: Recommended Free Tools -->
+                <div class="bg-purple-950/20 light:bg-purple-50/50 p-6 rounded-2xl border border-purple-500/20">
+                    <h3 class="text-base font-bold text-white light:text-slate-900 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-screws-all text-brand-purple"></i> Free Recommended Tools & Resources
+                    </h3>
+                    <div id="modalTools" class="flex flex-wrap gap-2">
+                        <!-- Dynamic Tool Pills -->
+                    </div>
+                </div>
+
+                <!-- Section 4: Alternatives & Pitfalls -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-bold text-white light:text-slate-900 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-shuffle text-emerald-400"></i> Alternative Approaches
+                        </h4>
+                        <ul id="modalAlternatives" class="list-disc list-inside text-xs space-y-1.5 text-slate-400 light:text-slate-600">
+                            <!-- Dynamic Alternatives -->
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white light:text-slate-900 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-ban text-rose-400"></i> Common Mistakes to Avoid
+                        </h4>
+                        <ul id="modalMistakes" class="list-disc list-inside text-xs space-y-1.5 text-slate-400 light:text-slate-600">
+                            <!-- Dynamic Mistakes -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Section 5: FAQs -->
+                <div>
+                    <h3 class="text-base font-bold text-white light:text-slate-900 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-question text-cyan-400"></i> Frequently Asked Questions
+                    </h3>
+                    <div id="modalFaqs" class="space-y-3">
+                        <!-- Dynamic FAQs -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 sm:p-6 border-t border-slate-800 light:border-slate-200 bg-navy-900 light:bg-slate-50 flex items-center justify-between gap-4">
+                <button id="modalBookmarkBtn" class="px-4 py-2.5 rounded-xl bg-slate-800 light:bg-slate-200 hover:bg-slate-700 text-slate-200 light:text-slate-800 text-xs font-bold transition flex items-center gap-2">
+                    <i class="fa-regular fa-bookmark"></i> Bookmark Solution
+                </button>
+                <div class="flex items-center gap-2">
+                    <button onclick="shareCurrentSolution()" class="px-4 py-2.5 rounded-xl border border-slate-700 light:border-slate-300 text-slate-300 light:text-slate-700 hover:bg-slate-800 light:hover:bg-slate-200 text-xs font-bold transition flex items-center gap-2">
+                        <i class="fa-solid fa-share-nodes"></i> Share
+                    </button>
+                    <button onclick="closeModal('solutionModal')" class="gradient-btn px-6 py-2.5 rounded-xl text-xs font-bold text-white shadow-md">
+                        Done Reading
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SAVED SOLUTIONS DRAWER -->
+    <div id="savedDrawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-navy-900 light:bg-white border-l border-slate-800 light:border-slate-200 z-50 transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl flex flex-col">
+        <div class="p-6 border-b border-slate-800 light:border-slate-200 flex items-center justify-between">
+            <h3 class="text-lg font-bold text-white light:text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-bookmark text-brand-purple"></i> Saved Bookmarks
+            </h3>
+            <button onclick="toggleSavedDrawer()" class="text-slate-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+        <div id="savedItemsList" class="p-6 overflow-y-auto flex-grow space-y-4">
+            <!-- Dynamic Saved Items -->
+        </div>
+        <div class="p-6 border-t border-slate-800 light:border-slate-200 bg-navy-950/50 light:bg-slate-50">
+            <button onclick="clearAllBookmarks()" class="w-full py-2.5 rounded-xl border border-rose-500/30 text-rose-400 hover:bg-rose-500/10 text-xs font-semibold transition">
+                Clear All Saved Items
+            </button>
+        </div>
+    </div>
+
+    <!-- ABOUT MODAL -->
+    <div id="aboutModal" class="fixed inset-0 z-50 hidden bg-navy-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-navy-900 light:bg-white border border-slate-800 light:border-slate-200 w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg gradient-btn flex items-center justify-center text-white font-bold">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white light:text-slate-900">About TrendSolve</h3>
+                </div>
+                <button onclick="closeModal('aboutModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <p class="text-xs text-slate-300 light:text-slate-600 leading-relaxed mb-4">
+                <strong>TrendSolve</strong> is an open-access knowledge repository built to eliminate friction in real-world problem solving. From overcoming AI halluncinations to landing remote work clients without paid software, we distill complex challenges into actionable 5-minute workflows.
+            </p>
+            <div class="bg-slate-800/40 light:bg-slate-100 p-4 rounded-xl text-xs text-slate-400 light:text-slate-600 mb-6 space-y-2">
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 100% Free & Open Solutions</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Verified Non-Paid Software Alternatives</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Actionable Interactive Blueprints</div>
+            </div>
+            <button onclick="closeModal('aboutModal')" class="w-full gradient-btn py-2.5 rounded-xl text-xs font-bold text-white">Got It</button>
+        </div>
+    </div>
+
+    <!-- CONTACT MODAL -->
+    <div id="contactModal" class="fixed inset-0 z-50 hidden bg-navy-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-navy-900 light:bg-white border border-slate-800 light:border-slate-200 w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold text-white light:text-slate-900">Submit a Problem</h3>
+                <button onclick="closeModal('contactModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <p class="text-xs text-slate-400 light:text-slate-600 mb-4">Stuck on a tricky issue? Request a step-by-step breakdown from our research contributors.</p>
+            <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Your Email</label>
+                    <input type="email" required placeholder="you@example.com" class="w-full bg-slate-800 light:bg-slate-100 border border-slate-700 light:border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-100 light:text-slate-900 focus:outline-none focus:border-brand-purple">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Problem Description</label>
+                    <textarea required rows="4" placeholder="Describe the challenge in detail..." class="w-full bg-slate-800 light:bg-slate-100 border border-slate-700 light:border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-100 light:text-slate-900 focus:outline-none focus:border-brand-purple"></textarea>
+                </div>
+                <button type="submit" class="w-full gradient-btn py-2.5 rounded-xl text-xs font-bold text-white">Submit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- FOOTER -->
+    <footer class="bg-navy-900 light:bg-slate-100 border-t border-slate-800 light:border-slate-200 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg gradient-btn flex items-center justify-center text-white font-bold text-sm">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+                <span class="text-lg font-extrabold text-white light:text-slate-900">Trend<span class="text-gradient">Solve</span></span>
+            </div>
+            <p class="text-xs text-slate-500 light:text-slate-600 text-center">
+                © 2026 TrendSolve Platform. Built for creators, developers, students & entrepreneurs.
+            </p>
+            <div class="flex items-center gap-4 text-slate-400 text-sm">
+                <a href="#" onclick="openModal('aboutModal')" class="hover:text-purple-400 transition">About</a>
+                <a href="#" onclick="openModal('contactModal')" class="hover:text-purple-400 transition">Contact</a>
+                <a href="#" onclick="showToast('Privacy Policy: No personal data is stored on external servers.')" class="hover:text-purple-400 transition">Privacy</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        /* ==========================================================================
+           1. DATA REPOSITORY: 15 REAL-WORLD DETAILED PROBLEM-SOLVING BLUEPRINTS
+           ========================================================================== */
+        const PROBLEMS_DATA = [
+            {
+                id: 'prob-01',
+                title: 'ChatGPT Hallucinating Fake Citations & Inaccurate Data',
+                category: 'AI Tools & Automation',
+                shortDescription: 'AI models frequently invent fictional book quotes, scientific paper titles, and URLs when asked for research backing.',
+                trendingScore: '98% Match',
+                difficulty: 'Beginner',
+                timeEstimate: '3 mins',
+                tags: ['ChatGPT', 'Prompts', 'Research', 'AI'],
+                explanation: 'Large Language Models (LLMs) are probabilistic text completion engines, not direct fact databases. When pushed for references without strict constraints, they generate plausible-sounding fake sources.',
+                whyItHappens: 'Standard prompting doesn\'t enforce retrieval constraints. The model prioritizes fluent sentence structure over truth verification.',
+                steps: [
+                    'Inject a hard constraint prompt: "Only use facts from official documentation. If unknown, state \'No verified data\'."',
+                    'Use Web-browsing enabled models or ground prompts with uploaded PDF/text documents directly.',
+                    'Cross-verify generated titles on Google Scholar or Consensus.app before referencing in published works.'
+                ],
+                tools: ['Consensus.app', 'Perplexity AI', 'Google Scholar'],
+                alternatives: ['Use Perplexity AI which forces real-time web citations with every query response.'],
+                mistakesToAvoid: ['Never copy paste URLs directly from AI without clicking to verify they exist.'],
+                faqs: [
+                    { q: 'Can I fix this on free ChatGPT?', a: 'Yes, by explicitly instructing it: "Provide quotes only. If you do not have source context, do not invent titles."' }
+                ]
+            },
+            {
+                id: 'prob-02',
+                title: 'High Client Churn Rate for Freelancers & Solo Consultants',
+                category: 'Career & Job Opportunities',
+                shortDescription: 'Freelancers struggle with clients dropping off after single projects instead of converting into high-ticket retainer contracts.',
+                trendingScore: '94% Hot',
+                difficulty: 'Intermediate',
+                timeEstimate: '10 mins',
+                tags: ['Freelance', 'Retainers', 'Sales', 'Clients'],
+                explanation: 'One-off projects leave freelancers on a continuous income rollercoaster. Establishing monthly retainer packages requires shifting from deliverable-based selling to outcome-driven partnerships.',
+                whyItHappens: 'Freelancers position themselves as tactical task-doers (e.g. "I design logos") rather than strategic growth partners (e.g. "I optimize conversion rates").',
+                steps: [
+                    'Include an "Ongoing Optimization Audit" proposal option at the close of every standalone project.',
+                    'Offer a 15% discount for 6-month continuous maintenance agreements.',
+                    'Send automated monthly ROI summary reports demonstrating specific metric improvements.'
+                ],
+                tools: ['Loom', 'Notion Proposals', 'Stripe Subscriptions'],
+                alternatives: ['Partner with digital agencies to act as their recurring white-label subcontractor.'],
+                mistakesToAvoid: ['Failing to schedule a formal project wrap-up review call to present retainer options.'],
+                faqs: [
+                    { q: 'What is a reasonable retainer price?', a: 'Typically 30-50% of your full project fee charged on a predictable monthly recurring cadence.' }
+                ]
+            },
+            {
+                id: 'prob-03',
+                title: 'High Website Bounce Rate on Mobile Devices',
+                category: 'Digital Marketing & Social Media',
+                shortDescription: 'Over 60% of smartphone visitors leave landing pages within 3 seconds without interacting.',
+                trendingScore: '91% Trend',
+                difficulty: 'Intermediate',
+                timeEstimate: '8 mins',
+                tags: ['UX Design', 'SEO', 'Mobile', 'Web Performance'],
+                explanation: 'Slow layout render times, oversized images, intrusive popups, and non-responsive tap targets make mobile browsing frustrating.',
+                whyItHappens: 'Websites designed primarily on desktop monitors often neglect responsive asset compression and touch layout optimization.',
+                steps: [
+                    'Compress images to WebP format using free tools like TinyPNG to keep pages under 1.5MB.',
+                    'Eliminate intrusive mobile popups that obscure screen real estate on initial page load.',
+                    'Increase touch button targets to minimum 44px by 44px padding.'
+                ],
+                tools: ['PageSpeed Insights', 'TinyPNG', 'Google Search Console'],
+                alternatives: ['Implement an AMP (Accelerated Mobile Page) lightweight layout.'],
+                mistakesToAvoid: ['Using small 12px text sizes that force smartphone users to pinch and zoom.'],
+                faqs: [
+                    { q: 'How fast should mobile pages load?', a: 'Target Largest Contentful Paint (LCP) under 2.5 seconds on 4G connections.' }
+                ]
+            },
+            {
+                id: 'prob-04',
+                title: 'Student Productivity & Study Procrastination Loops',
+                category: 'Education & Student Problems',
+                shortDescription: 'Difficulty maintaining focus during long study sessions leading to cramming and high exam stress.',
+                trendingScore: '96% Popular',
+                difficulty: 'Beginner',
+                timeEstimate: '5 mins',
+                tags: ['Study', 'Pomodoro', 'Active Recall', 'Focus'],
+                explanation: 'Passive reading and highlighting notes create an illusion of competence while yielding low long-term memory retention.',
+                whyItHappens: 'The brain naturally seeks low-friction dopamine hits when faced with intimidating, unstructured study materials.',
+                steps: [
+                    'Adopt the Pomodoro technique: 25 minutes uninterrupted focus followed by 5-minute break.',
+                    'Switch from passive re-reading to Active Recall using flashcards or teaching concepts aloud.',
+                    'Block distracting apps during study blocks using browser focus extensions.'
+                ],
+                tools: ['Anki Flashcards', 'Forest App', 'Notion Study Template'],
+                alternatives: ['Use the Feynman Technique: Explain the concept in simple terms on a blank whiteboard.'],
+                mistakesToAvoid: ['Studying with your smartphone sitting next to your laptop screen.'],
+                faqs: [
+                    { q: 'How many Pomodoros should I do daily?', a: '4 to 6 high-intensity sessions (approx 2-3 hours total focused work) are more effective than 8 hours of distracted studying.' }
+                ]
+            },
+            {
+                id: 'prob-05',
+                title: 'Low Organic Reach on Social Media Short Videos',
+                category: 'Creator & Content Growth',
+                shortDescription: 'Reels and TikTok short videos plateauing at 200-300 views despite high editing effort.',
+                trendingScore: '99% Top Trend',
+                difficulty: 'Intermediate',
+                timeEstimate: '6 mins',
+                tags: ['TikTok', 'Instagram Reels', 'Video Editing', 'Hooks'],
+                explanation: 'Algorithms prioritize audience watch time retention in the first 3 seconds above all other signals.',
+                whyItHappens: 'Slow intros, delayed value delivery, and lack of visual text overlays cause viewers to scroll away instantly.',
+                steps: [
+                    'Craft a 3-second visual and verbal "Hook" that directly states the high-value payout.',
+                    'Add dynamic auto-captions with highlighted keywords for sound-off viewers.',
+                    'Keep video length tight (15-25 seconds) to maximize completion percentage.'
+                ],
+                tools: ['CapCut', 'AutoCap', 'AnswerThePublic'],
+                alternatives: ['Repurpose top performing short video scripts into Twitter/X threads and LinkedIn carousels.'],
+                mistakesToAvoid: ['Starting videos with "Hey guys, welcome back to my channel!"'],
+                faqs: [
+                    { q: 'Should I post multiple times a day?', a: 'Consistency and hook quality beat raw volume. 1 optimized video per day is ideal.' }
+                ]
+            },
+            {
+                id: 'prob-06',
+                title: 'Overcoming Remote Work Burnout & Digital Fatigue',
+                category: 'Personal Productivity',
+                shortDescription: 'Blurry boundaries between home life and work tasks resulting in persistent fatigue and lower motivation.',
+                trendingScore: '89% Trend',
+                difficulty: 'Beginner',
+                timeEstimate: '5 mins',
+                tags: ['Remote Work', 'Mental Health', 'Productivity', 'Habits'],
+                explanation: 'Constant connectivity, Slack notifications, and lack of physical commute transition routines wear down cognitive reserves.',
+                whyItHappens: 'Working in the same room where you sleep or relax removes natural environmental cues for psychological disengagement.',
+                steps: [
+                    'Establish a strict "Shutdown Routine" at 6:00 PM: close all work tabs and turn off work notification channels.',
+                    'Implement a "Fake Commute": take a 10-minute walk outside before starting and after finishing work.',
+                    'Batch communicate asynchronously instead of jumping on immediate impromptu video calls.'
+                ],
+                tools: ['Clockwise Calendar', 'Slack Do Not Disturb', 'Freedom App'],
+                alternatives: ['Work from a local library or coworking space 2 days a week for environmental contrast.'],
+                mistakesToAvoid: ['Checking work email on your mobile phone in bed immediately upon waking.'],
+                faqs: [
+                    { q: 'How do I tell my manager I need boundary limits?', a: 'Frame it around focus productivity: "I block 2pm-5pm for deep work to deliver deliverables faster."' }
+                ]
+            },
+            {
+                id: 'prob-07',
+                title: 'High Unsubscribe Rates in Email Marketing Campaigns',
+                category: 'Digital Marketing & Social Media',
+                shortDescription: 'Email newsletters losing subscribers rapidly due to poor segmentation and promotional overload.',
+                trendingScore: '88% Match',
+                difficulty: 'Advanced',
+                timeEstimate: '12 mins',
+                tags: ['Email Marketing', 'Copywriting', 'Conversion', 'Newsletters'],
+                explanation: 'Subscribers lose interest when emails feel spammy, overly sales-driven, or unaligned with why they originally opted in.',
+                whyItHappens: 'Sending generic mass blasts to an unsegmented list without delivering consistent educational value.',
+                steps: [
+                    'Segment subscribers based on sign-up source, interest topics, and engagement level.',
+                    'Maintain an 80/20 value-to-pitch ratio (80% actionable insights, 20% promotional pitches).',
+                    'Purge inactive subscribers who haven\'t opened an email in 90 days to boost inbox deliverability.'
+                ],
+                tools: ['ConvertKit', 'Mailchimp', 'SubjectLine Tester'],
+                alternatives: ['Switch to plain text emails instead of heavy HTML template emails for higher inbox delivery.'],
+                mistakesToAvoid: ['Using misleading clickbait subject lines that destroy reader trust.'],
+                faqs: [
+                    { q: 'What is a good email open rate?', a: 'A healthy open rate across most industries ranges between 25% and 40%.' }
+                ]
+            },
+            {
+                id: 'prob-08',
+                title: 'SaaS App Slow Loading Speed & Large JS Bundles',
+                category: 'Technology & Internet',
+                shortDescription: 'Web applications lagging on initial load due to unoptimized third-party packages and scripts.',
+                trendingScore: '92% Tech',
+                difficulty: 'Advanced',
+                timeEstimate: '15 mins',
+                tags: ['WebDev', 'JavaScript', 'Performance', 'React'],
+                explanation: 'Excessive dependencies inflate JavaScript bundle size, delaying Time to Interactive (TTI) for users.',
+                whyItHappens: 'Importing entire libraries when only minor utility functions are needed, alongside unoptimized code splitting.',
+                steps: [
+                    'Audit JavaScript bundle composition using Webpack Bundle Analyzer or Source Map Explorer.',
+                    'Implement Dynamic Code-Splitting and Lazy Loading for non-critical route components.',
+                    'Replace bloated libraries (e.g. Moment.js) with lightweight native alternatives (e.g. date-fns or native JS Int).',
+                ],
+                tools: ['Lighthouse', 'BundlePhobia', 'Chrome DevTools'],
+                alternatives: ['Server-side render (SSR) critical landing pages using frameworks like Next.js.'],
+                mistakesToAvoid: ['Loading full icon packs font files when using only 5 icons.'],
+                faqs: [
+                    { q: 'What is a good performance score on Lighthouse?', a: 'Aim for a score above 90 on both Mobile and Desktop audits.' }
+                ]
+            },
+            {
+                id: 'prob-09',
+                title: 'Bootstrapped Startups Running Out of Cash Runway',
+                category: 'Business & Startup Problems',
+                shortDescription: 'Early-stage founders burning through personal savings before achieving profitable product-market fit.',
+                trendingScore: '95% Critical',
+                difficulty: 'Advanced',
+                timeEstimate: '15 mins',
+                tags: ['Startup', 'Finance', 'SaaS', 'Bootstrapping'],
+                explanation: 'Premature scaling, spending on paid advertising before retention is locked, and excessive software subscription costs.',
+                whyItHappens: 'Focusing on vanity metrics (app downloads, website visits) rather than paying customer retention metrics.',
+                steps: [
+                    'Cut fixed overhead by switching to open-source or free tier developer tools and cloud credits.',
+                    'Pre-sell lifetime deals or annual subscriptions to existing power users to generate upfront cash.',
+                    'Double down on direct high-touch outbound sales rather than expensive digital ads.'
+                ],
+                tools: ['AppSumo', 'AWS Activate Credits', 'Stripe Climate'],
+                alternatives: ['Explore non-dilutive startup grants, micro-investments, or revenue-based financing.'],
+                mistakesToAvoid: ['Hiring full-time employees before reaching predictable monthly revenue.'],
+                faqs: [
+                    { q: 'How many months of runway should a startup maintain?', a: 'Minimum 6 months, ideally 12-18 months of operational runway.' }
+                ]
+            },
+            {
+                id: 'prob-10',
+                title: 'Difficulty Monetizing a Personal Blog or Content Hub',
+                category: 'Online Earning & Freelancing',
+                shortDescription: 'Creators generating thousands of monthly page views but earning under $50 in ad revenue.',
+                trendingScore: '90% Trend',
+                difficulty: 'Intermediate',
+                timeEstimate: '10 mins',
+                tags: ['Monetization', 'Blogging', 'Affiliate', 'AdSense'],
+                explanation: 'Relying exclusively on low-CPM display advertising networks like basic Google AdSense rather than high-margin monetization models.',
+                whyItHappens: 'Lack of targeted affiliate recommendations, high-ticket digital products, or premium sponsor partnerships.',
+                steps: [
+                    'Replace generic banner ads with targeted affiliate product reviews that solve user problems.',
+                    'Create and sell a $19-$49 actionable digital eBook or template library addressing your top searched article.',
+                    'Apply to premium ad networks (Mediavine, Raptive) once reaching 50,000 monthly sessions.'
+                ],
+                tools: ['Amazon Associates', 'Gumroad', 'Thrivecart'],
+                alternatives: ['Launch a paid subscription tier on Substack or Patreon with exclusive insider breakdowns.'],
+                mistakesToAvoid: ['Plastering 15 noisy ads on a single page, destroying user experience.'],
+                faqs: [
+                    { q: 'What traffic do I need to make $1,000/month?', a: 'With targeted affiliate marketing or digital products, 10,000 targeted visitors can yield $1,000+.' }
+                ]
+            },
+            {
+                id: 'prob-11',
+                title: 'Password Fatigue & Account Security Risks',
+                category: 'Daily Life Solutions',
+                shortDescription: 'Reusing the same simple password across 20+ websites, making accounts vulnerable to data breaches.',
+                trendingScore: '87% Essential',
+                difficulty: 'Beginner',
+                timeEstimate: '4 mins',
+                tags: ['Security', 'Passwords', 'Privacy', 'Tech'],
+                explanation: 'Humans cannot remember 100+ unique, complex 16-character passwords, leading to unsafe shortcut habits.',
+                whyItHappens: 'Memorizing complex alphanumeric strings without automated vault software is practically impossible.',
+                steps: [
+                    'Install an open-source or audited password manager to generate and store randomized credentials.',
+                    'Enable Hardware or App-based 2-Factor Authentication (2FA) on all financial and primary email accounts.',
+                    'Check your primary email on HaveIBeenPwned.com to identify leaked passwords.'
+                ],
+                tools: ['Bitwarden', '1Password', 'Aegis 2FA'],
+                alternatives: ['Use Passkeys (WebAuthn) for passwordless biometric login where supported.'],
+                mistakesToAvoid: ['Using SMS-based 2FA which can be intercepted via SIM-swapping attacks.'],
+                faqs: [
+                    { q: 'Are free password managers safe?', a: 'Audited open-source tools like Bitwarden use end-to-end zero-knowledge encryption.' }
+                ]
+            },
+            {
+                id: 'prob-12',
+                title: 'PDF File Size Too Large to Email or Upload',
+                category: 'Technology & Internet',
+                shortDescription: 'Documents exceeding 25MB attachment limits for email and online submission portals.',
+                trendingScore: '93% Useful',
+                difficulty: 'Beginner',
+                timeEstimate: '2 mins',
+                tags: ['PDF', 'Files', 'Tools', 'Productivity'],
+                explanation: 'PDF files containing high-resolution scanned images or uncompressed graphics balloon in size.',
+                whyItHappens: 'Exporting directly from graphics tools like Photoshop without selecting web-optimized compression settings.',
+                steps: [
+                    'Use free browser-based vector PDF tools to compress images embedded in the document.',
+                    'Convert scanned image PDFs into searchable OCR text to reduce raw file footprint.',
+                    'Store the PDF in cloud storage (Google Drive/Dropbox) and share a view link instead of raw attachment.'
+                ],
+                tools: ['iLovePDF', 'Smallpdf', 'PDF24 Tools'],
+                alternatives: ['Export directly from Google Docs or Word selecting "Standard / Web Publishing" quality.'],
+                mistakesToAvoid: ['Re-scanning printed documents instead of compressing original digital files.'],
+                faqs: [
+                    { q: 'Is it safe to upload confidential PDFs to online compressors?', a: 'Use offline tools like PDF24 Creator desktop app for sensitive financial documents.' }
+                ]
+            },
+            {
+                id: 'prob-13',
+                title: 'Writer\'s Block & Creative Stagnation for Bloggers',
+                category: 'Creator & Content Growth',
+                shortDescription: 'Staring at a blank screen for hours struggling to outline interesting article topics.',
+                trendingScore: '86% Mindset',
+                difficulty: 'Beginner',
+                timeEstimate: '5 mins',
+                tags: ['Writing', 'Creativity', 'Blogging', 'Content'],
+                explanation: 'Trying to edit and refine sentences simultaneously while attempting to generate initial creative ideas.',
+                whyItHappens: 'Conflating the brainstorming phase with the drafting phase overwhelms cognitive working memory.',
+                steps: [
+                    'Separate ideation from drafting: Spend 15 minutes outlining bullet points before writing full paragraphs.',
+                    'Use Reddit or Quora communities in your niche to identify real questions actual people are asking.',
+                    'Dictate ideas verbally into voice-to-text apps to capture natural conversational language.'
+                ],
+                tools: ['Otter.ai', 'AnswerThePublic', 'MindNode'],
+                alternatives: ['Draft the conclusion first, then fill in the supporting body sections.'],
+                mistakesToAvoid: ['Editing grammar and word choice during your first rough draft pass.'],
+                faqs: [
+                    { q: 'How do I overcome blank page anxiety?', a: 'Commit to writing 50 terrible words. Action creates clarity, not vice versa.' }
+                ]
+            },
+            {
+                id: 'prob-14',
+                title: 'High Electric Power Consumption from Home Computers',
+                category: 'Daily Life Solutions',
+                shortDescription: 'High electricity bills driven by power-hungry desktop rigs and home server setups left on 24/7.',
+                trendingScore: '85% Eco',
+                difficulty: 'Intermediate',
+                timeEstimate: '7 mins',
+                tags: ['Energy', 'Hardware', 'Hardware Hacks', 'Cost Saving'],
+                explanation: 'Desktops running unchecked background rendering tasks or high-power GPUs draw continuous high wattage.',
+                whyItHappens: 'Windows Power Plans set to "High Performance" prevent CPU states from downclocking during idle hours.',
+                steps: [
+                    'Switch OS Power Settings to "Balanced" or "Power Saver" mode to allow idle CPU downclocking.',
+                    'Configure "Sleep Mode" or "Hibernate" after 15 minutes of inactivity.',
+                    'Use a smart plug meter to identify peak wattage draw devices in your setup.'
+                ],
+                tools: ['Local Energy Meters', 'Windows PowerToys', 'HWMonitor'],
+                alternatives: ['Migrate 24/7 home server tasks to low-power Raspberry Pi hardware.'],
+                mistakesToAvoid: ['Leaving discrete GPUs active for light web browsing tasks.'],
+                faqs: [
+                    { q: 'Does sleep mode draw significant electricity?', a: 'Sleep mode typically consumes under 2 watts compared to 100-300+ watts active.' }
+                ]
+            },
+            {
+                id: 'prob-15',
+                title: 'Cold Outreach Emails Falling into Gmail Spam Folders',
+                category: 'Business & Startup Problems',
+                shortDescription: 'B2B sales outreach emails going unread because domain reputation is flagged by spam filters.',
+                trendingScore: '97% B2B',
+                difficulty: 'Advanced',
+                timeEstimate: '10 mins',
+                tags: ['Cold Email', 'Deliverability', 'Sales', 'B2B'],
+                explanation: 'Email service providers (Google/Outlook) filter messages lacking SPF, DKIM, and DMARC authentication DNS records.',
+                whyItHappens: 'Sending high volumes of unpersonalized emails from a newly registered domain without warming it up first.',
+                steps: [
+                    'Configure SPF, DKIM, and DMARC records correctly in your DNS registrar dashboard.',
+                    'Use an automated email warm-up tool for 14-21 days before launching cold outreach campaigns.',
+                    'Keep email copy plain text, avoid spam trigger words (e.g. "FREE money", "100% guarantee"), and limit link count.'
+                ],
+                tools: ['Instantly.ai', 'MXToolbox', 'Mail-Tester'],
+                alternatives: ['Reach out via LinkedIn InMail or warm network introductions instead of cold email.'],
+                mistakesToAvoid: ['Sending 200 emails per day from your primary corporate domain.'],
+                faqs: [
+                    { q: 'How many cold emails should I send daily per inbox?', a: 'Keep sending limits under 30-50 emails per inbox per day to maintain domain health.' }
+                ]
+            }
+        ];
+
+        const CATEGORIES = [
+            'All',
+            'Technology & Internet',
+            'AI Tools & Automation',
+            'Education & Student Problems',
+            'Career & Job Opportunities',
+            'Business & Startup Problems',
+            'Digital Marketing & Social Media',
+            'Creator & Content Growth',
+            'Personal Productivity',
+            'Online Earning & Freelancing',
+            'Daily Life Solutions'
+        ];
+
+        /* ==========================================================================
+           2. APP STATE MANAGEMENT & LOCAL STORAGE
+           ========================================================================== */
+        let state = {
+            currentCategory: 'All',
+            searchQuery: '',
+            savedBookmarks: JSON.parse(localStorage.getItem('trendsolve_saved')) || [],
+            theme: localStorage.getItem('trendsolve_theme') || 'dark',
+            activeSolutionId: null
+        };
+
+        /* ==========================================================================
+           3. INITIALIZATION & EVEN LISTENERS
+           ========================================================================== */
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            renderCategories();
+            renderProblems();
+            updateSavedCounter();
+        });
+
+        function initTheme() {
+            if (state.theme === 'light') {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+                document.getElementById('themeIcon').className = 'fa-solid fa-sun text-amber-400';
+            } else {
+                document.documentElement.classList.remove('light');
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').className = 'fa-solid fa-moon text-purple-400';
+            }
+        }
+
+        function toggleTheme() {
+            if (state.theme === 'dark') {
+                state.theme = 'light';
+            } else {
+                state.theme = 'dark';
+            }
+            localStorage.setItem('trendsolve_theme', state.theme);
+            initTheme();
+            showToast(`Switched to ${state.theme} mode`);
+        }
+
+        /* ==========================================================================
+           4. RENDERERS & VIEW LOGIC
+           ========================================================================== */
+        function renderCategories() {
+            const container = document.getElementById('categoryContainer');
+            container.innerHTML = CATEGORIES.map(cat => {
+                const isActive = state.currentCategory === cat;
+                return `
+                    <button onclick="filterCategory('${cat}')" 
+                        class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 border ${
+                            isActive 
+                            ? 'gradient-btn text-white border-transparent shadow-lg shadow-purple-500/20' 
+                            : 'bg-slate-900/80 light:bg-slate-200 text-slate-400 light:text-slate-700 hover:text-white hover:bg-slate-800 border-slate-800 light:border-slate-300'
+                        }">
+                        ${cat}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function renderProblems() {
+            const grid = document.getElementById('problemsGrid');
+            const emptyState = document.getElementById('emptyState');
+            const countEl = document.getElementById('resultsCount');
+
+            // Filter logic
+            const filtered = PROBLEMS_DATA.filter(item => {
+                const matchesCategory = state.currentCategory === 'All' || item.category === state.currentCategory;
+                const query = state.searchQuery.toLowerCase();
+                const matchesSearch = !query || 
+                    item.title.toLowerCase().includes(query) ||
+                    item.shortDescription.toLowerCase().includes(query) ||
+                    item.category.toLowerCase().includes(query) ||
+                    item.tags.some(t => t.toLowerCase().includes(query));
+
+                return matchesCategory && matchesSearch;
+            });
+
+            countEl.textContent = `${filtered.length} Problems Available`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = filtered.map(item => {
+                const isSaved = state.savedBookmarks.includes(item.id);
+                return `
+                    <div class="glass-card rounded-2xl p-6 flex flex-col justify-between relative group">
+                        <div>
+                            <!-- Header Info -->
+                            <div class="flex items-center justify-between gap-2 mb-3">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-purple-400 bg-purple-500/10 border border-purple-500/20 px-2.5 py-1 rounded-md">
+                                    ${item.category}
+                                </span>
+                                <button onclick="toggleBookmark('${item.id}', event)" 
+                                    class="text-slate-500 hover:text-rose-500 transition p-1" 
+                                    title="${isSaved ? 'Remove Bookmark' : 'Save Problem'}">
+                                    <i class="${isSaved ? 'fa-solid text-rose-500' : 'fa-regular'} fa-bookmark text-base"></i>
+                                </button>
+                            </div>
+
+                            <!-- Title & Description -->
+                            <h3 class="text-base font-bold text-white light:text-slate-900 group-hover:text-purple-400 transition mb-2 line-clamp-2">
+                                ${item.title}
+                            </h3>
+                            <p class="text-xs text-slate-400 light:text-slate-600 line-clamp-3 mb-4 leading-relaxed">
+                                ${item.shortDescription}
+                            </p>
+                        </div>
+
+                        <div>
+                            <!-- Metadata badges -->
+                            <div class="flex items-center gap-3 text-[11px] text-slate-400 mb-4 pt-3 border-t border-slate-800/80 light:border-slate-200">
+                                <span class="flex items-center gap-1"><i class="fa-solid fa-fire text-amber-400"></i> ${item.trendingScore}</span>
+                                <span class="flex items-center gap-1"><i class="fa-solid fa-gauge-high text-brand-blue"></i> ${item.difficulty}</span>
+                                <span class="flex items-center gap-1"><i class="fa-regular fa-clock text-emerald-400"></i> ${item.timeEstimate}</span>
+                            </div>
+
+                            <!-- Explore Button -->
+                            <button onclick="openSolutionModal('${item.id}')" 
+                                class="w-full py-2.5 rounded-xl bg-slate-800 light:bg-slate-100 hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 light:text-slate-800 text-xs font-bold transition flex items-center justify-center gap-2 group-hover:bg-gradient-to-r group-hover:from-brand-blue group-hover:to-brand-purple group-hover:text-white">
+                                <span>Explore Solution</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        /* ==========================================================================
+           5. INTERACTIVE MODAL DETAILED SOLUTION RENDERER
+           ========================================================================== */
+        function openSolutionModal(id) {
+            const item = PROBLEMS_DATA.find(p => p.id === id);
+            if (!item) return;
+
+            state.activeSolutionId = id;
+
+            // Title & Badges
+            document.getElementById('modalTitle').textContent = item.title;
+            document.getElementById('modalBadges').innerHTML = `
+                <span class="text-[10px] font-bold uppercase tracking-wider text-purple-400 bg-purple-500/10 border border-purple-500/20 px-2.5 py-1 rounded-md">${item.category}</span>
+                <span class="text-[10px] font-bold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2.5 py-1 rounded-md"><i class="fa-solid fa-fire mr-1"></i>${item.trendingScore}</span>
+                <span class="text-[10px] font-bold text-slate-400 bg-slate-800 px-2.5 py-1 rounded-md"><i class="fa-regular fa-clock mr-1"></i>Est: ${item.timeEstimate}</span>
+            `;
+
+            // Sections
+            document.getElementById('modalExplanation').textContent = item.explanation;
+            document.getElementById('modalWhy').textContent = item.whyItHappens;
+
+            // Interactive Checklist Steps
+            document.getElementById('modalSteps').innerHTML = item.steps.map((step, idx) => `
+                <label class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-800/40 light:bg-slate-100 border border-slate-800 light:border-slate-200 hover:border-purple-500/30 transition cursor-pointer group">
+                    <input type="checkbox" class="mt-0.5 rounded border-slate-700 text-purple-600 focus:ring-purple-500 accent-purple-600">
+                    <span class="text-xs text-slate-300 light:text-slate-700 leading-relaxed group-hover:text-white light:group-hover:text-slate-900 font-medium">
+                        <strong class="text-purple-400">Step ${idx + 1}:</strong> ${step}
+                    </span>
+                </label>
+            `).join('');
+
+            // Tools
+            document.getElementById('modalTools').innerHTML = item.tools.map(tool => `
+                <span class="px-3 py-1.5 rounded-lg bg-slate-800 light:bg-white text-slate-300 light:text-slate-800 border border-slate-700 light:border-slate-300 text-xs font-semibold inline-flex items-center gap-1.5">
+                    <i class="fa-solid fa-screwdriver-wrench text-brand-purple text-[10px]"></i> ${tool}
+                </span>
+            `).join('');
+
+            // Alternatives & Mistakes
+            document.getElementById('modalAlternatives').innerHTML = item.alternatives.map(alt => `<li>${alt}</li>`).join('');
+            document.getElementById('modalMistakes').innerHTML = item.mistakesToAvoid.map(m => `<li>${m}</li>`).join('');
+
+            // FAQs
+            document.getElementById('modalFaqs').innerHTML = item.faqs.map(faq => `
+                <div class="bg-slate-800/30 light:bg-slate-50 p-3.5 rounded-xl border border-slate-800 light:border-slate-200">
+                    <h5 class="text-xs font-bold text-white light:text-slate-900 mb-1">Q: ${faq.q}</h5>
+                    <p class="text-xs text-slate-400 light:text-slate-600">${faq.a}</p>
+                </div>
+            `).join('');
+
+            // Bookmark button state in modal
+            const modalBkBtn = document.getElementById('modalBookmarkBtn');
+            const isSaved = state.savedBookmarks.includes(id);
+            modalBkBtn.innerHTML = `
+                <i class="${isSaved ? 'fa-solid text-rose-500' : 'fa-regular'} fa-bookmark"></i> 
+                ${isSaved ? 'Bookmarked' : 'Bookmark Solution'}
+            `;
+            modalBkBtn.onclick = () => {
+                toggleBookmark(id);
+                openSolutionModal(id); // re-render state
+            };
+
+            openModal('solutionModal');
+        }
+
+        /* ==========================================================================
+           6. SEARCH & FILTER HANDLERS
+           ========================================================================== */
+        function filterCategory(cat) {
+            state.currentCategory = cat;
+            renderCategories();
+            renderProblems();
+        }
+
+        function handleSearch(e) {
+            state.searchQuery = e.target.value.trim();
+            toggleClearBtn();
+            renderProblems();
+        }
+
+        function setSearchQuery(query) {
+            const input = document.getElementById('searchInput');
+            input.value = query;
+            state.searchQuery = query;
+            toggleClearBtn();
+            renderProblems();
+            window.scrollTo({ top: document.getElementById('problemsSection').offsetTop - 80, behavior: 'smooth' });
+        }
+
+        function triggerSearch() {
+            const input = document.getElementById('searchInput');
+            setSearchQuery(input.value.trim());
+        }
+
+        function clearSearch() {
+            const input = document.getElementById('searchInput');
+            input.value = '';
+            state.searchQuery = '';
+            toggleClearBtn();
+            renderProblems();
+        }
+
+        function toggleClearBtn() {
+            const clearBtn = document.getElementById('clearSearchBtn');
+            if (state.searchQuery.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+        }
+
+        function resetView() {
+            state.currentCategory = 'All';
+            state.searchQuery = '';
+            document.getElementById('searchInput').value = '';
+            toggleClearBtn();
+            renderCategories();
+            renderProblems();
+        }
+
+        /* ==========================================================================
+           7. BOOKMARKING & LOCALSTORAGE SYSTEM
+           ========================================================================== */
+        function toggleBookmark(id, event) {
+            if (event) event.stopPropagation();
+
+            const index = state.savedBookmarks.indexOf(id);
+            if (index > -1) {
+                state.savedBookmarks.splice(index, 1);
+                showToast('Removed from saved bookmarks');
+            } else {
+                state.savedBookmarks.push(id);
+                showToast('Saved to your bookmarks repository!');
+            }
+
+            localStorage.setItem('trendsolve_saved', JSON.stringify(state.savedBookmarks));
+            updateSavedCounter();
+            renderProblems();
+            renderSavedDrawer();
+        }
+
+        function updateSavedCounter() {
+            document.getElementById('savedCounter').textContent = state.savedBookmarks.length;
+        }
+
+        function toggleSavedDrawer() {
+            const drawer = document.getElementById('savedDrawer');
+            if (drawer.classList.contains('translate-x-full')) {
+                renderSavedDrawer();
+                drawer.classList.remove('translate-x-full');
+            } else {
+                drawer.classList.add('translate-x-full');
+            }
+        }
+
+        function renderSavedDrawer() {
+            const container = document.getElementById('savedItemsList');
+            if (state.savedBookmarks.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-slate-500 text-xs">
+                        <i class="fa-regular fa-bookmark text-3xl mb-2 text-slate-600 block"></i>
+                        No saved problems yet. Click the bookmark icon on any card to save it for later.
+                    </div>
+                `;
+                return;
+            }
+
+            const savedItems = PROBLEMS_DATA.filter(p => state.savedBookmarks.includes(p.id));
+            container.innerHTML = savedItems.map(item => `
+                <div class="p-4 rounded-xl bg-slate-800/40 light:bg-slate-100 border border-slate-800 light:border-slate-200 flex items-start justify-between gap-3">
+                    <div>
+                        <span class="text-[9px] font-bold uppercase text-purple-400">${item.category}</span>
+                        <h4 class="text-xs font-bold text-white light:text-slate-900 line-clamp-1">${item.title}</h4>
+                        <button onclick="openSolutionModal('${item.id}')" class="text-[11px] text-brand-blue font-bold hover:underline mt-1 block">View Solution</button>
+                    </div>
+                    <button onclick="toggleBookmark('${item.id}')" class="text-slate-500 hover:text-rose-500 p-1">
+                        <i class="fa-solid fa-xmark text-sm"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function clearAllBookmarks() {
+            state.savedBookmarks = [];
+            localStorage.setItem('trendsolve_saved', JSON.stringify([]));
+            updateSavedCounter();
+            renderSavedDrawer();
+            renderProblems();
+            showToast('All bookmarks cleared');
+        }
+
+        /* ==========================================================================
+           8. MODAL HELPERS & UTILITIES
+           ========================================================================== */
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function scrollToSection(sectionId) {
+            const el = document.getElementById(sectionId);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function shareCurrentSolution() {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(window.location.href);
+                showToast('Link copied to clipboard!');
+            } else {
+                showToast('Sharing link active for this solution');
+            }
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            closeModal('contactModal');
+            showToast('Thank you! Your problem request has been submitted to our research queue.');
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'glass-panel px-4 py-3 rounded-xl shadow-2xl text-xs font-semibold text-white border border-purple-500/40 animate-slide-up flex items-center gap-2 pointer-events-auto';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i> ${message}`;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(100%)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
